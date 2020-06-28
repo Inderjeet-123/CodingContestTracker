@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+	{% block head %}
+	<title> CP tracker </title>
+	{% endblock %}
+	{% block body %} 	
+    <div class="maindiv" >
+         <table class='table' >
+		 <thead>
+			 <tr class="thr">
+			<th >NAME</th>
+			<th >LINK</th>
+			<th >TIME</th>
+			 </tr>
+		 </thead>
+		 {% for contest in contest_list %}
+		 <tr class="nam">
+			 <td >{{contest.name}}</td>
+			 <td><a href="{{contest.link}}">View</a></td>
+			 <td>{{contest.time}}</td>
+		</tr>
+		{% endfor %}
+    </div>
+    	{% endblock %}
+	 A negative time indicates that the contest has already started and is still running!
