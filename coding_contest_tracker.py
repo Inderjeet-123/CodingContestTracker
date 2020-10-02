@@ -98,12 +98,33 @@ class ContestData:
         for name,start_time in zip(names,start_times):
             start_time=self.get_relative_start_time(start_time[:-5])
             self.contest_list['hackerrank'].append(Contest(name,link,start_time))
+
+    def get_hacker_earth(self):
+        user_agent = ' Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0'
+        url = "https://www.hackerearth.com/challenges/"
+        headers={'User-Agent':user_agent} 
+        request=urllib.request.Request(url,None,headers) 
+        response = urllib.request.urlopen(request)
+        data = response.read() 
+        soup=BeautifulSoup(data,'lxml')
+        ULtag=soup.find('ul',{'class':'contests-active'})
+        names=ULtag.findChildren('span',{'itemprop':'name'})
+        start_times=ULtag.findChildren('meta',{'itemprop':"startDate"})
+        end_times=ULtag.findChildren('meta',{'itemprop':"endDate"})
+        names=[i.text for i in names]
+        start_times=[i['content'] for i in start_times]
+        #end_times=[i['content'] for i in end_times]
+        link='https://www.hackerearth.com/challenges/'
+        for name,start_time in zip(names,start_times):
+            start_time=self.get_relative_start_time(start_time[:-5])
+            self.contest_list['hackerearth'].append(Contest(name,link,start_time))
                 
 DoIt=ContestData()
 DoIt.get_code_forces()
 DoIt.get_code_chef()
 DoIt.get_at_coder()
 DoIt.get_hacker_rank()
+DoIt.get_hacker_earth()
 #DoIt.get_leetcode()
 
 DoIt.check_output()
@@ -133,4 +154,12 @@ def AC():
 def HR():
     return render_template('index.html',contest_list=DoIt.contest_list['hackerrank'])
 if __name__ == "__main__":
+
+@app.route('/HE')
+def HR():
+    return render_template('index.html',contest_list=DoIt.contest_list['hackerearth'])
+if __name__ == "__main__":
+
+
+    
     app.run(debug=True)

@@ -16,7 +16,7 @@ table {
   
 }
 tr:nth-child(odd) td {
-	background-color:#002b36;
+	background-color:#032c0d;
 	color:#657b83;
 }
 
@@ -29,9 +29,9 @@ td {
 }
 
 tr:nth-child(even) td {
-  background-color:#073642;	
-	color:#839496;
-}
+	background-color:#70d6db;	
+	  color:#839496;
+  }
 th{
 text-align:center;
 }
